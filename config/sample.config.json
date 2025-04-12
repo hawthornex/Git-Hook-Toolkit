@@ -1,0 +1,12 @@
+{
+  "maxSizeBytes": 1048576,
+  "ignoreGlobs": [
+    "**/vendor/**",
+    "**/dist/**",
+    "**/*.min.*"
+  ],
+  "secretPatterns": [
+    "AKIA[0-9A-Z]{16}",
+    "xox[baprs]-[0-9A-Za-z-]{10,48}"
+  ]
+}

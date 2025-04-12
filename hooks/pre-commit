@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+# Minimal pre-commit checks for a solo project.
+# - trims trailing whitespace
+# - blocks accidental large files
+
+set -eu
+
+max_size_bytes=${GIT_HOOK_MAX_SIZE_BYTES:-1048576} # 1MB default
+
+# Get staged files
+staged=$(git diff --cached --name-only --diff-filter=ACM || true)
+[ -z "$staged" ] && exit 0
+
+fail=0
+
+for f in $staged; do
+  [ ! -f "$f" ] && continue
+
+  # Check file size
+  size=$(wc -c < "$f" | tr -d ' ')
+  if [ "$size" -gt "$max_size_bytes" ]; then
+    echo "[pre-commit] Blocked large file: $f ($size bytes)" >&2
+    fail=1
+  fi
+
+  # Trim trailing whitespace and restage if changed
+  if command -v sed >/dev/null 2>&1; then
+    tmp="$(mktemp)"
+    # Portable sed for trailing spaces and tabs
+    sed -e 's/[ \t][ \t]*$//' "$f" > "$tmp"
+    if ! cmp -s "$f" "$tmp"; then
+      mv "$tmp" "$f"
+      git add "$f"
+      echo "[pre-commit] Trimmed trailing whitespace: $f"
+    else
+      rm -f "$tmp"
+    fi
+  fi
+done
+
+exit "$fail"
+

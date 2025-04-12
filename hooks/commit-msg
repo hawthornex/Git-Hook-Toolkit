@@ -1,0 +1,30 @@
+#!/usr/bin/env sh
+# Lightweight commit message lint
+# Rules (soft):
+# - First line max ~72 chars
+# - Avoid trailing period in subject
+# - Encourage present tense verbs
+
+set -eu
+msg_file=$1
+
+subject=$(head -n1 "$msg_file" | tr -d '\r')
+len=${#subject}
+
+warn=0
+
+if [ "$len" -gt 72 ]; then
+  echo "[commit-msg] Subject too long ($len > 72)" >&2
+  warn=1
+fi
+
+case "$subject" in
+  *.)
+    echo "[commit-msg] Avoid trailing period in subject" >&2
+    warn=1
+    ;;
+esac
+
+# Soft-warn only; do not block.
+exit 0
+

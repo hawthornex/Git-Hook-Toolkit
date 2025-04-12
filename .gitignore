@@ -1,0 +1,7 @@
+AGENTS.md
+.claude
+CLAUDE.md
+# local artifacts
+.DS_Store
+*.log
+tmp/
