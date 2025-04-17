@@ -19,7 +19,7 @@ for f in $staged; do
   # Check file size
   size=$(wc -c < "$f" | tr -d ' ')
   if [ "$size" -gt "$max_size_bytes" ]; then
-    echo "[pre-commit] Blocked large file: $f ($size bytes)" >&2
+    echo "[pre-commit] Large file staged:  ( bytes) > " >&2
     fail=1
   fi
 

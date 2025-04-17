@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # Lightweight commit message lint
-# Rules (soft):
+# Rules (soft hints):
 # - First line max ~72 chars
 # - Avoid trailing period in subject
 # - Encourage present tense verbs
@@ -25,6 +25,6 @@ case "$subject" in
     ;;
 esac
 
-# Soft-warn only; do not block.
+# Soft-warn only; do not block commit.
 exit 0
 
