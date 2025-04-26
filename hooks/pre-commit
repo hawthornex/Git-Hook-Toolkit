@@ -6,6 +6,7 @@
 set -eu
 
 max_size_bytes=${GIT_HOOK_MAX_SIZE_BYTES:-1048576} # 1MB default
+ignore_globs_file=${GIT_HOOK_IGNORE_FILE:-config/sample.config.json}
 
 # Get staged files
 staged=$(git diff --cached --name-only --diff-filter=ACM || true)
@@ -15,6 +16,15 @@ fail=0
 
 for f in $staged; do
   [ ! -f "$f" ] && continue
+
+  # respect simple ignore globs if present in config (very lightweight)
+  if [ -f "$ignore_globs_file" ]; then
+    case "$f" in
+      vendor/*|dist/*|*.min.*)
+        # skip common generated or vendored paths
+        continue;;
+    esac
+  fi
 
   # Check file size
   size=$(wc -c < "$f" | tr -d ' ')
@@ -39,4 +49,3 @@ for f in $staged; do
 done
 
 exit "$fail"
-

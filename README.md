@@ -12,6 +12,15 @@ This is intentionally minimal so it’s easy to drop into solo repos.
 - Tweak `config/sample.config.json` to suit your preferences.
 - Optionally set `GIT_HOOK_MAX_SIZE_BYTES` to change the large-file cap.
 
+### Install helper
+- Run `scripts/install-hooks.sh` from a Git repo to copy hooks into `.git/hooks/`.
+
+### Example
+```
+export GIT_HOOK_MAX_SIZE_BYTES=524288
+git add -A && git commit -m "try small change"
+```
+
 ## Notes
 - No external dependencies; POSIX shell where possible.
 - Scripts try to fail softly with helpful messages.
