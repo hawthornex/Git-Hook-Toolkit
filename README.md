@@ -5,7 +5,7 @@ A small, practical set of Git hooks and helpers for personal projects. Focuses o
 - Commit message linting with a lightweight, human style
 - Optional secret scanning patterns
 
-This is intentionally minimal so it’s easy to drop into solo repos.
+This is intentionally minimal so it’s easy to drop into solo repos. You can opt out of any check by removing the corresponding hook.
 
 ## Quick Start
 - Copy `hooks/` into your repo’s `.git/hooks/` and make scripts executable.

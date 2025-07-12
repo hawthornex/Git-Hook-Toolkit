@@ -2,7 +2,7 @@
 # Lightweight commit message lint
 # Rules (soft hints):
 # - First line max ~72 chars
-# - Avoid trailing period in subject
+# - Avoid trailing period in subject (soft)
 # - Encourage present tense verbs
 
 set -eu
@@ -20,7 +20,7 @@ fi
 
 case "$subject" in
   *.)
-    echo "[commit-msg] Avoid trailing period in subject" >&2
+    echo "[commit-msg] Avoid trailing period in subject (soft)" >&2
     warn=1
     ;;
 esac
